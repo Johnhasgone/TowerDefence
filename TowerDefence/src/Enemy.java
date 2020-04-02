@@ -52,7 +52,7 @@ public class Enemy extends Rectangle {
         GamePanel.health--;
     }
 
-    public int walkFrame = 0, walkSpeed = 5;
+    public int walkFrame = 0, walkSpeed = Values.walkSpeed;
     public void physic() {
         if (walkFrame >= walkSpeed) {
             if (direction == right) {

@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
         room = new Room();
         save = new Save();
         store = new Store();
-        health = 100;
+        health = Values.health;
 
 
 
@@ -124,20 +124,20 @@ public class GamePanel extends JPanel implements Runnable {
         if (health < 1) {
             g.setColor(new Color(240, 20, 20));
             //g.fillRect(0, 0, myWidth, myHeight); // CHANGE COLOR OF EVERYTHING
-            g.setColor(new Color(255, 255, 255));
-            g.setFont(new Font("Courier New", Font.BOLD, 14));
-            g.drawString("GAME OVER", 340, 300);
+            g.setColor(Color.RED);
+            g.setFont(new Font("Helvetica", Font.BOLD, 26));
+            g.drawString(Values.over, MainWindow.size.width/2 - Values.over.length()/2*15, 300);
         }
 
         if (isWinner) {
             g.setColor(Color.WHITE);
             //g.fillRect(0, 0, myWidth, myHeight); // CHANGE COLOR OF EVERYTHING
-            g.setColor(new Color(255, 255, 255));
-            g.setFont(new Font("Courier New", Font.BOLD, 14));
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Helvetica", Font.BOLD, 26));
             if (level == Values.maxLevel) {
-                g.drawString("YOU WON THE WHOLE GAME!!!", 340, 300);
+                g.drawString(Values.absoluteWinner, MainWindow.size.width/2 - Values.absoluteWinner.length()/2*15, 300);
             } else {
-                g.drawString("YOU WIN!!!", 340, 300);                   // Window with exit or next level
+                g.drawString(Values.partWinner, MainWindow.size.width/2 - Values.partWinner.length()/2*15, 300);                   // Window with exit or next level
             }
         }
     }

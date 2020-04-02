@@ -8,6 +8,7 @@ public class Save {
             Scanner scanner = new Scanner(loadPath);
             while (scanner.hasNext()) {
                 GamePanel.coins = scanner.nextInt();
+                Values.walkSpeed = scanner.nextInt();
                 GamePanel.killsToWin = scanner.nextInt();
                 int i = 0;
                 while (i < GamePanel.room.blocks.length) {

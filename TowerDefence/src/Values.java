@@ -1,7 +1,7 @@
 public class Values {
     public static int ground = 0;
     public static int road = 1;
-    public static int air = -1;             // CHANGE
+    public static int air = -1;
     public static int airEarth = 0;
     public static int airTrash = 1;
     public static int airDefender1 = 2;
@@ -28,4 +28,12 @@ public class Values {
     public static int blockSize = 60;
     public static int width = 16;
     public static int height = 10;
+
+    public static int walkSpeed;
+
+    public static String over = "GAME OVER";
+    public static String partWinner = "EXCELLENT!!!   PLEASE, WAIT FOR THE NEXT LEVEL";
+    public static String absoluteWinner = "YOU'RE AWESOME!!!";
+
+    public static int health = 10;
 }
