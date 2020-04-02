@@ -2,9 +2,9 @@ import java.awt.*;
 
 public class Store {
     public static int shopWidth = 4;
-    public static int buttonSize = 60;
+    public static int buttonSize = 70;
     public static int cellSpace = 2;
-    public static int awayFromRoom = 29;
+    public static int awayFromRoom = 32;
     public static int iconSize = 18;
     public static int iconSpace = 3;
     public static int iconTextY = 15;
@@ -96,7 +96,7 @@ public class Store {
         }
 
         buttonHealth = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y, iconSize, iconSize);
-        buttonCoins = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - (iconSize + 1)*2, iconSize, iconSize);
+        buttonCoins = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - (iconSize + 3)*2, iconSize, iconSize);
         buttonKills = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - iconSize, iconSize, iconSize);
     }
 

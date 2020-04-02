@@ -8,7 +8,7 @@ public class Values {
     public static int airDefender2 = 3;
     public static int airDefender3 = 4;
 
-    public static int maxLevel = 2;
+    public static int maxLevel = 10;
 
     public static int mobAir = -1;
     public static int mobGreen = 0;
@@ -27,7 +27,7 @@ public class Values {
 
     public static int blockSize = 60;
     public static int width = 16;
-    public static int height = 10;
+    public static int height = 11;
 
     public static int walkSpeed;
 

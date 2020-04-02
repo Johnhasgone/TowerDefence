@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class MainWindow extends JFrame {
 
     public static String title = "TowerDefence - Kill'Em All!";
-    public static Dimension size = new Dimension(1000,800);
+    public static Dimension size = new Dimension(1000,850);
     private JPanel buttonPanel;
     public GamePanel gameScreen;
 
