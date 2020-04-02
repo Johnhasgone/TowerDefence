@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Store {
-    public static int shopWidth = 8;
+    public static int shopWidth = 4;
     public static int buttonSize = 60;
     public static int cellSpace = 2;
     public static int awayFromRoom = 29;
@@ -11,8 +11,8 @@ public class Store {
     public static int itemIn = 4;
     public static int heldId = -1;
     public static int realId = -1;
-    public static int[] buttonId = {Values.airDefender1, Values.airDefender2, Values.airDefender3, Values.air, Values.air, Values.air, Values.air, Values.airTrash};
-    public static int[] buttonPrice = {10, 20, 30, 0, 0, 0, 0, 0};
+    public static int[] buttonId = {Values.airDefender1, Values.airDefender2, Values.airDefender3, Values.airTrash};
+    public static int[] buttonPrice = {10, 20, 30, 0};
 
     public Rectangle[] buttons = new Rectangle[shopWidth];
     public Rectangle buttonHealth;
@@ -63,6 +63,26 @@ public class Store {
                 }
             }
         }
+        //Removing the tower
+        if (mouseButton == 3) {
+            if (!holdsItem) {
+                int i = 0;
+                while (i < GamePanel.room.blocks.length) {
+                    int j = 0;
+                    while (j < GamePanel.room.blocks[i].length) {
+                        if (GamePanel.room.blocks[i][j].contains(GamePanel.mse)) {
+                            if (GamePanel.room.blocks[i][j].groundId != Values.road && GamePanel.room.blocks[i][j].airId != Values.air) {
+                                GamePanel.room.blocks[i][j].airId = Values.air;
+                            }
+                        }
+                        j++;
+                    }
+
+                    i++;
+                }
+
+            }
+        }
     }
 
     private void define() {
@@ -108,6 +128,7 @@ public class Store {
         g.drawString("" + GamePanel.health, buttonHealth.x + buttonHealth.width + iconSpace, buttonHealth.y + iconTextY);
         g.drawString("" + GamePanel.coins, buttonCoins.x + buttonCoins.width + iconSpace, buttonCoins.y + iconTextY);
         g.drawString("" + GamePanel.killed, buttonKills.x + buttonKills.width + iconSpace, buttonKills.y + iconTextY);
+        g.drawString("Level: " + GamePanel.level, buttonKills.x, buttonKills.y +iconSize + iconTextY);
 
         if (holdsItem) {
             g.drawImage(GamePanel.tilesetAir[heldId], GamePanel.mse.x - (buttons[0].width - itemIn*2)/2 + itemIn, GamePanel.mse.y - (buttons[0].width - itemIn*2)/2 + itemIn, buttons[0].width - itemIn*2, buttons[0].height - itemIn*2, null);

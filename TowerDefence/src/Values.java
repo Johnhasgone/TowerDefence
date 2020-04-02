@@ -25,4 +25,7 @@ public class Values {
     public static int shotStrength2 = 2;
     public static int shotStrength3 = 3;
 
+    public static int blockSize = 60;
+    public static int width = 16;
+    public static int height = 10;
 }

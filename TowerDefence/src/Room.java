@@ -1,9 +1,9 @@
 import java.awt.*;
 
 public class Room {
-    public static int worldWidth = 12;
-    public static int worldHeight = 9;
-    public static int blockSize = 52;
+    public static int worldWidth = Values.width;
+    public static int worldHeight = Values.height;
+    public static int blockSize = Values.blockSize;
 
     public Block[][] blocks;
 

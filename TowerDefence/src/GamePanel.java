@@ -7,7 +7,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int myWidth, myHeight;
     public static int coins;
-    public static int health = 100;
+    public static int health;
     public static int killed = 0, killsToWin = 0, level = 1;
     public static int winTime = 4000, winFrame = 0;
 
@@ -46,11 +46,12 @@ public class GamePanel extends JPanel implements Runnable {
         room = new Room();
         save = new Save();
         store = new Store();
+        health = 100;
 
 
 
-        tilesetGround[0] = new ImageIcon("images/tilesetGround.jpg").getImage();
-        tilesetGround[1] = new ImageIcon("images/road.png").getImage();
+        tilesetGround[0] = new ImageIcon("images/space.png").getImage();
+        tilesetGround[1] = new ImageIcon("images/spaceWay.jpg").getImage();
         tilesetAir[0] = new ImageIcon("images/earth.png").getImage();
         tilesetAir[1] = new ImageIcon("images/trash.png").getImage();
         tilesetAir[2] = new ImageIcon("images/defender.png").getImage();

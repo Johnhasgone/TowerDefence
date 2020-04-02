@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Block extends Rectangle {
     public Rectangle towerSquare;
-    public int towerSquareSize = 100;           //replace to Values, use different values for different towers(sniper for bigger ones)
+    public int towerSquareSize = 120;           //replace to Values, use different values for different towers(sniper for bigger ones)
     public int groundId;
     public int airId;
     public static int shotStrength;
