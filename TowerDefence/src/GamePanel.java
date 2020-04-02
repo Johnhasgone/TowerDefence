@@ -64,6 +64,8 @@ public class GamePanel extends JPanel implements Runnable {
         tilesetRes[3] = new ImageIcon("images/mob.png").getImage();
 
         tilesetMob[0] = new ImageIcon("images/mob.png").getImage();
+        tilesetMob[1] = new ImageIcon("images/doom.png").getImage();
+        tilesetMob[2] = new ImageIcon("images/ghost.png").getImage();
 
 //        int i = 0;
 //        while (i < tilesetGround.length) {
@@ -148,7 +150,15 @@ public class GamePanel extends JPanel implements Runnable {
             int i = 0;
             while (i < mobs.length) {
                 if (!mobs[i].inGame) {
-                    mobs[i].spawnMob(Values.mobGreen);
+                    if (level == 5) {
+                        mobs[i].spawnMob(Values.mobRed);
+                    }
+                    else if(level == i && Math.random() < 0.5) {
+                        mobs[i].spawnMob(Values.mobGreen);
+                    }
+                    else if (level == i && Math.random() > 0.5) {
+                        mobs[i].spawnMob(Values.mobYellow);
+                    }
                     break;
                 }
                 i++;

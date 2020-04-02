@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d434f64e-c020-4dd2-b1b0-1548f2356440" name="Default Changelist" comment="" />
+    <list default="true" id="d434f64e-c020-4dd2-b1b0-1548f2356440" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TowerDefence/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TowerDefence/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TowerDefence/Values.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TowerDefence/Values.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Values.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Values.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,10 +24,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1ZvkwjnTcTsPrt8GqcQZ2JhHHT7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,6 +40,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Save" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
@@ -88,26 +100,30 @@
       <screen x="0" y="23" width="2560" height="1338" />
     </state>
     <state x="356" y="409" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog/0.23.2560.1338@0.23.2560.1338" timestamp="1585822650264" />
-    <state width="1254" height="423" key="GridCell.Tab.0.bottom" timestamp="1585849710349">
-      <screen x="0" y="23" width="2560" height="1338" />
+    <state width="812" height="267" key="GridCell.Tab.0.bottom" timestamp="1585854973561">
+      <screen x="51" y="23" width="1629" height="1027" />
     </state>
     <state width="1232" height="423" key="GridCell.Tab.0.bottom/0.0.2560.1440@0.0.2560.1440" timestamp="1585765871587" />
     <state width="1254" height="423" key="GridCell.Tab.0.bottom/0.23.2560.1338@0.23.2560.1338" timestamp="1585849710349" />
-    <state width="1254" height="423" key="GridCell.Tab.0.center" timestamp="1585849710348">
-      <screen x="0" y="23" width="2560" height="1338" />
+    <state width="812" height="267" key="GridCell.Tab.0.bottom/51.23.1629.1027@51.23.1629.1027" timestamp="1585854973561" />
+    <state width="812" height="267" key="GridCell.Tab.0.center" timestamp="1585854973560">
+      <screen x="51" y="23" width="1629" height="1027" />
     </state>
     <state width="1232" height="423" key="GridCell.Tab.0.center/0.0.2560.1440@0.0.2560.1440" timestamp="1585765871585" />
     <state width="1254" height="423" key="GridCell.Tab.0.center/0.23.2560.1338@0.23.2560.1338" timestamp="1585849710348" />
-    <state width="1254" height="423" key="GridCell.Tab.0.left" timestamp="1585849710348">
-      <screen x="0" y="23" width="2560" height="1338" />
+    <state width="812" height="267" key="GridCell.Tab.0.center/51.23.1629.1027@51.23.1629.1027" timestamp="1585854973560" />
+    <state width="812" height="267" key="GridCell.Tab.0.left" timestamp="1585854973560">
+      <screen x="51" y="23" width="1629" height="1027" />
     </state>
     <state width="1232" height="423" key="GridCell.Tab.0.left/0.0.2560.1440@0.0.2560.1440" timestamp="1585765871584" />
     <state width="1254" height="423" key="GridCell.Tab.0.left/0.23.2560.1338@0.23.2560.1338" timestamp="1585849710348" />
-    <state width="1254" height="423" key="GridCell.Tab.0.right" timestamp="1585849710349">
-      <screen x="0" y="23" width="2560" height="1338" />
+    <state width="812" height="267" key="GridCell.Tab.0.left/51.23.1629.1027@51.23.1629.1027" timestamp="1585854973560" />
+    <state width="812" height="267" key="GridCell.Tab.0.right" timestamp="1585854973560">
+      <screen x="51" y="23" width="1629" height="1027" />
     </state>
     <state width="1232" height="423" key="GridCell.Tab.0.right/0.0.2560.1440@0.0.2560.1440" timestamp="1585765871586" />
     <state width="1254" height="423" key="GridCell.Tab.0.right/0.23.2560.1338@0.23.2560.1338" timestamp="1585849710349" />
+    <state width="812" height="267" key="GridCell.Tab.0.right/51.23.1629.1027@51.23.1629.1027" timestamp="1585854973560" />
     <state width="1254" height="468" key="GridCell.Tab.1.bottom" timestamp="1585815822748">
       <screen x="0" y="23" width="2560" height="1338" />
     </state>
