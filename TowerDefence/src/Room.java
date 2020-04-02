@@ -36,7 +36,7 @@ public class Room {
             }
             i++;
         }
-        i = 0;                                      //maybe you need to remove rectangle around the tower
+        i = 0;
         while (i < blocks.length) {
             int j = 0;
             while (j < blocks[i].length) {

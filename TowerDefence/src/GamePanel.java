@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.CropImageFilter;
-import java.awt.image.FilteredImageSource;
 import java.io.File;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -22,11 +20,11 @@ public class GamePanel extends JPanel implements Runnable {
     public static Room room;
     public static Save save;
     public static Store store;
-    public static Enemy[] mobs = new Enemy[100];
+    public static Enemy[] mobs = new Enemy[100];                //set number of enemies in load file
 
     public static Image[] tilesetGround = new Image[100];
     public static Image[] tilesetAir = new Image[100];
-    public static Image[] tilesetRes = new Image[100];
+    public static Image[] tilesetRes = new Image[100];          //not 100
     public static Image[] tilesetMob = new Image[100];
 
 
@@ -56,6 +54,8 @@ public class GamePanel extends JPanel implements Runnable {
         tilesetAir[0] = new ImageIcon("images/earth.png").getImage();
         tilesetAir[1] = new ImageIcon("images/trash.png").getImage();
         tilesetAir[2] = new ImageIcon("images/defender.png").getImage();
+        tilesetAir[3] = new ImageIcon("images/defender2.png").getImage();
+        tilesetAir[4] = new ImageIcon("images/defender3.png").getImage();
 
         tilesetRes[0] = new ImageIcon("images/cell.png").getImage();
         tilesetRes[1] = new ImageIcon("images/life.png").getImage();
@@ -147,7 +147,7 @@ public class GamePanel extends JPanel implements Runnable {
             int i = 0;
             while (i < mobs.length) {
                 if (!mobs[i].inGame) {
-                    mobs[i].spawnMob(Values.mobGreeny);
+                    mobs[i].spawnMob(Values.mobGreen);
                     break;
                 }
                 i++;

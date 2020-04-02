@@ -1,19 +1,18 @@
-import javax.swing.plaf.SplitPaneUI;
 import java.awt.*;
 
 public class Store {
     public static int shopWidth = 8;
-    public static int buttonSize = 52;
+    public static int buttonSize = 60;
     public static int cellSpace = 2;
     public static int awayFromRoom = 29;
-    public static int iconSize = 20;
+    public static int iconSize = 18;
     public static int iconSpace = 3;
     public static int iconTextY = 15;
     public static int itemIn = 4;
     public static int heldId = -1;
     public static int realId = -1;
-    public static int[] buttonId = {Values.airTowerLaser, Values.air, Values.air, Values.air, Values.air, Values.air, Values.air, Values.airTrash};
-    public static int[] buttonPrice = {10, 0, 0, 0, 0, 0, 0, 0};
+    public static int[] buttonId = {Values.airDefender1, Values.airDefender2, Values.airDefender3, Values.air, Values.air, Values.air, Values.air, Values.airTrash};
+    public static int[] buttonPrice = {10, 20, 30, 0, 0, 0, 0, 0};
 
     public Rectangle[] buttons = new Rectangle[shopWidth];
     public Rectangle buttonHealth;
@@ -77,7 +76,7 @@ public class Store {
         }
 
         buttonHealth = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y, iconSize, iconSize);
-        buttonCoins = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - iconSize*2, iconSize, iconSize);
+        buttonCoins = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - (iconSize + 1)*2, iconSize, iconSize);
         buttonKills = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - iconSize, iconSize, iconSize);
     }
 
@@ -101,7 +100,7 @@ public class Store {
             }
             i++;
         }
-        g.drawImage(GamePanel.tilesetRes[1], buttonHealth.x, buttonHealth.y, buttonHealth.width, buttonHealth.height, null);   // what is fillRect
+        g.drawImage(GamePanel.tilesetRes[1], buttonHealth.x, buttonHealth.y, buttonHealth.width, buttonHealth.height, null);
         g.drawImage(GamePanel.tilesetRes[2], buttonCoins.x, buttonCoins.y, buttonCoins.width, buttonCoins.height, null);
         g.drawImage(GamePanel.tilesetRes[3], buttonKills.x, buttonKills.y, buttonKills.width, buttonKills.height, null);
         g.setFont(new Font("Courier New", Font.BOLD, 14));

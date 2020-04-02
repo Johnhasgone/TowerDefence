@@ -8,6 +8,7 @@ public class Block extends Rectangle {
     public int towerSquareSize = 100;           //replace to Values, use different values for different towers(sniper for bigger ones)
     public int groundId;
     public int airId;
+    public static int shotStrength;
     public int shot = -1;
     public boolean shooting = false;
     public int loseTime = 100, loseFrame = 0;       //health loosing time
@@ -38,13 +39,19 @@ public class Block extends Rectangle {
             shooting = false;
         }
         if (!shooting) {
-            if (airId == Values.airTowerLaser) {
+            if (airId == Values.airDefender1 || airId == Values.airDefender2 || airId == Values.airDefender3) {
                 int i = 0;
                 while (i < GamePanel.mobs.length) {
                     if (GamePanel.mobs[i].inGame) {
                         if (towerSquare.intersects(GamePanel.mobs[i])) {
                             shooting = true;
                             shot = i;
+                            if (airId == Values.airDefender1)
+                                shotStrength = Values.shotStrength1;
+                            else if (airId == Values.airDefender2)
+                                shotStrength = Values.shotStrength2;
+                            else if (airId == Values.airDefender3)
+                                shotStrength = Values.shotStrength3;
                         }
                     }
                     i++;
@@ -54,7 +61,12 @@ public class Block extends Rectangle {
 
         if (shooting) {
             if (loseFrame >= loseTime) {
-                GamePanel.mobs[shot].EnemyLooseHealth(1);
+                if (airId == Values.airDefender1)
+                    GamePanel.mobs[shot].EnemyLooseHealth(Values.shotStrength1);
+                if (airId == Values.airDefender2)
+                    GamePanel.mobs[shot].EnemyLooseHealth(Values.shotStrength2);
+                if (airId == Values.airDefender3)
+                    GamePanel.mobs[shot].EnemyLooseHealth(Values.shotStrength3);
                 loseFrame = 0;
             } else {
                 loseFrame++;
@@ -65,7 +77,7 @@ public class Block extends Rectangle {
 
                 shooting = false;
                 shot = -1;
-                GamePanel.killed++;
+
 
                 GamePanel.hasWon();
             }
@@ -77,13 +89,18 @@ public class Block extends Rectangle {
     }
 
     public void fight(Graphics g) {
-        if (GamePanel.isDebug) {
-            if (airId == Values.airTowerLaser) {
-                g.drawRect(towerSquare.x, towerSquare.y, towerSquare.width, towerSquare.height);
-            }
-        }
+//        if (GamePanel.isDebug) {
+//            if (airId == Values.airDefender) {
+//                g.drawRect(towerSquare.x, towerSquare.y, towerSquare.width, towerSquare.height);
+//            }
+//        }
         if (shooting) {
-            g.setColor(Color.RED);
+            if (airId == Values.airDefender1)
+                g.setColor(Color.GREEN);
+            if (airId == Values.airDefender2)
+                g.setColor(Color.YELLOW);
+            if (airId == Values.airDefender3)
+                g.setColor(Color.RED);
             g.drawLine(x + width/2, y + height/2,
                     GamePanel.mobs[shot].x + GamePanel.mobs[shot].width/2,
                     GamePanel.mobs[shot].y + GamePanel.mobs[shot].height/2);

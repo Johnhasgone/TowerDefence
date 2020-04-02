@@ -44,7 +44,7 @@ public class Enemy extends Rectangle {
         inGame = false;
         direction = right;
         mobWalk = 0;
-
+        GamePanel.killed++;
         GamePanel.room.blocks[0][0].getMoney(mobId);
     }
 
@@ -143,7 +143,7 @@ public class Enemy extends Rectangle {
             g.setColor(Color.BLACK);
             g.fillRect(x, y - (healthSpace + healthHeight), width, healthHeight);
 
-            g.setColor(Color.MAGENTA);
+            g.setColor(Color.GREEN);
             g.fillRect(x, y - (healthSpace + healthHeight), health, healthHeight);
 
             g.setColor(Color.BLACK);
@@ -154,7 +154,7 @@ public class Enemy extends Rectangle {
     public void EnemyLooseHealth(int i) {
         health -= i;
 
-        if (health == 0)
+        if (health <= 0)
             killMob();
     }
 }
