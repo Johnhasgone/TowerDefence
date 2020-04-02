@@ -58,12 +58,8 @@ public class MainWindow extends JFrame {
         switch (action) {
             case "level":
                 return actionEvent -> {
-                    try {
-                        GamePanel.level = 2;
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        GamePanel.level = Integer.parseInt(setLevel());
+                        gameScreen.define();
                 };
             case "restart":
                 return actionEvent -> {
@@ -77,5 +73,12 @@ public class MainWindow extends JFrame {
             default:
                 return actionEvent -> System.exit(0);
         }
+    }
+
+    public String setLevel() {
+        Object[] possibilities = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        return (String) JOptionPane.showInputDialog(this, "Choose the level: ",
+                "Level", JOptionPane.PLAIN_MESSAGE,
+                new ImageIcon("images/iconDialog.png"), possibilities, "1");
     }
 }
