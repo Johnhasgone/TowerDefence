@@ -127,7 +127,7 @@ public class Store {
         g.setColor(new Color(255, 255, 255));
         g.drawString("" + GamePanel.health, buttonHealth.x + buttonHealth.width + iconSpace, buttonHealth.y + iconTextY);
         g.drawString("" + GamePanel.coins, buttonCoins.x + buttonCoins.width + iconSpace, buttonCoins.y + iconTextY);
-        g.drawString("" + GamePanel.killed, buttonKills.x + buttonKills.width + iconSpace, buttonKills.y + iconTextY);
+        g.drawString("" + (GamePanel.killsToWin - GamePanel.killed), buttonKills.x + buttonKills.width + iconSpace, buttonKills.y + iconTextY);
         g.drawString("Level: " + GamePanel.level, buttonKills.x, buttonKills.y +iconSize + iconTextY);
 
         if (holdsItem) {

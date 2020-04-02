@@ -20,7 +20,7 @@ public class Values {
 
     public static int spawnFrame = 0;
 
-    public static int[] deathReward = {5};
+    public static int[] deathReward = {5, 7, 10};
     public static int shotStrength1 = 1;
     public static int shotStrength2 = 2;
     public static int shotStrength3 = 3;

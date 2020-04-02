@@ -49,7 +49,14 @@ public class Enemy extends Rectangle {
     }
 
     public void looseHealth() {
-        GamePanel.health--;
+        if (mobId == Values.mobGreen)
+            GamePanel.health--;
+        if (mobId == Values.mobYellow) {
+            GamePanel.health -= 2;
+        }
+        if (mobId == Values.mobRed) {
+            GamePanel.health -= 10;
+        }
     }
 
     public int walkFrame = 0, walkSpeed = Values.walkSpeed;
