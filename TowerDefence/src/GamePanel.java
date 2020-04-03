@@ -7,7 +7,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int myWidth, myHeight;
     public static int coins;
-    public static int health;
+    public static int gamerHealth;
     public static int killed = 0, killsToWin = 0, level = 1;
     public static int winTime = 4000, winFrame = 0;
 
@@ -20,12 +20,12 @@ public class GamePanel extends JPanel implements Runnable {
     public static Room room;
     public static Save save;
     public static Store store;
-    public static Enemy[] mobs = new Enemy[100];                //set number of enemies in load file
+    public static Creeper[] mobs = new Creeper[100];
 
-    public static Image[] tilesetGround = new Image[100];
-    public static Image[] tilesetAir = new Image[100];
-    public static Image[] tilesetRes = new Image[100];          //not 100
-    public static Image[] tilesetMob = new Image[100];
+    public static Image[] tilesetGround = new Image[2];
+    public static Image[] tilesetAir = new Image[5];
+    public static Image[] tilesetRes = new Image[4];
+    public static Image[] tilesetMob = new Image[3];
 
 
     public GamePanel(Frame frame) {
@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
         room = new Room();
         save = new Save();
         store = new Store();
-        health = Values.health;
+        gamerHealth = Values.health;
 
 
 
@@ -67,26 +67,11 @@ public class GamePanel extends JPanel implements Runnable {
         tilesetMob[1] = new ImageIcon("images/doom.png").getImage();
         tilesetMob[2] = new ImageIcon("images/ghost.png").getImage();
 
-//        int i = 0;
-//        while (i < tilesetGround.length) {
-//
-//            tilesetGround[i] = createImage(new FilteredImageSource(tilesetGround[i].getSource(),
-//                                            new CropImageFilter(0, 52*i, 52, 52)));
-//            i++;
-//        }
-//        i = 0;
-//        while (i < tilesetAir.length) {
-//            tilesetAir[i] = new ImageIcon("images/tilesetAir.jpg").getImage();
-//            tilesetAir[i] = createImage(new FilteredImageSource(tilesetAir[i].getSource(),
-//                    new CropImageFilter(0, 52*i, 52, 52)));
-//            i++;
-//        }
-
-        save.loadSave(new File("save/mission" + level + ".jhg"));
+        save.loadSave(new File("save/level" + level + ".jhg"));
 
         int i = 0;
         while (i < mobs.length) {
-            mobs[i] = new Enemy();
+            mobs[i] = new Creeper();
             i++;
         }
     }
@@ -102,14 +87,14 @@ public class GamePanel extends JPanel implements Runnable {
         g.setColor(new Color(56, 100, 67));
         g.fillRect(0, 0, getWidth(), getHeight());     //LOOK
         g.setColor(new Color(10, 20, 70));
-        g.drawLine(room.blocks[0][0].x - 1, 0, room.blocks[0][0].x - 1,
-                room.blocks[Room.worldHeight-1][0].y + Room.blockSize + 1); // DRAWING THE LEFT LINE
-        g.drawLine(room.blocks[0][Room.worldWidth - 1].x + Room.blockSize + 1, 0,
-                room.blocks[0][Room.worldWidth - 1].x + Room.blockSize + 1,
-                room.blocks[Room.worldHeight-1][Room.worldWidth - 1].y + Room.blockSize + 1); // DRAWING THE right LINE
-        g.drawLine(room.blocks[0][0].x - 1, room.blocks[Room.worldHeight-1][0].y + Room.blockSize + 1,
-                room.blocks[0][Room.worldWidth - 1].x + Room.blockSize + 1,
-                room.blocks[Room.worldHeight-1][Room.worldWidth - 1].y + Room.blockSize + 1); // DRAWING THE BOTTOM LINE
+        g.drawLine(room.fields[0][0].x - 1, 0, room.fields[0][0].x - 1,
+                room.fields[Room.worldHeight-1][0].y + Room.fieldSize + 1); // DRAWING THE LEFT LINE
+        g.drawLine(room.fields[0][Room.worldWidth - 1].x + Room.fieldSize + 1, 0,
+                room.fields[0][Room.worldWidth - 1].x + Room.fieldSize + 1,
+                room.fields[Room.worldHeight-1][Room.worldWidth - 1].y + Room.fieldSize + 1); // DRAWING THE right LINE
+        g.drawLine(room.fields[0][0].x - 1, room.fields[Room.worldHeight-1][0].y + Room.fieldSize + 1,
+                room.fields[0][Room.worldWidth - 1].x + Room.fieldSize + 1,
+                room.fields[Room.worldHeight-1][Room.worldWidth - 1].y + Room.fieldSize + 1); // DRAWING THE BOTTOM LINE
 
         room.draw(g);                                          // Drawing the room
 
@@ -123,17 +108,17 @@ public class GamePanel extends JPanel implements Runnable {
 
         store.draw(g);
 
-        if (health < 1) {
-            g.setColor(new Color(240, 20, 20));
-            //g.fillRect(0, 0, myWidth, myHeight); // CHANGE COLOR OF EVERYTHING
+        if (gamerHealth < 1) {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, myWidth, myHeight);
             g.setColor(Color.RED);
             g.setFont(new Font("Helvetica", Font.BOLD, 26));
-            g.drawString(Values.over, MainWindow.size.width/2 - Values.over.length()/2*15, 300);
+            g.drawString(Values.over, MainWindow.size.width/2 - Values.over.length()/2*17, MainWindow.size.height/2);
         }
 
         if (isWinner) {
-            g.setColor(Color.WHITE);
-            //g.fillRect(0, 0, myWidth, myHeight); // CHANGE COLOR OF EVERYTHING
+            g.setColor(Color.BLACK);
+            g.fillRect(MainWindow.size.width/8, MainWindow.size.height/4, MainWindow.size.width/4*3, MainWindow.size.height/5);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Helvetica", Font.BOLD, 26));
             if (level == Values.maxLevel) {
@@ -150,14 +135,14 @@ public class GamePanel extends JPanel implements Runnable {
             int i = 0;
             while (i < mobs.length) {
                 if (!mobs[i].inGame) {
-                    if (level == 5 && Math.random() < 0.5) {
-                        mobs[i].spawnMob(Values.mobRed);
+                    if (level == 5 && Math.random() < 0.2) {
+                        mobs[i].spawnCreeper(Values.mobRed);
                     }
-                    else if(i%2 == 0) {
-                        mobs[i].spawnMob(Values.mobGreen);
+                    else if(Math.random() < 0.5 || i%2 == 1) {
+                        mobs[i].spawnCreeper(Values.mobGreen);
                     }
-                    else if (i%2 == 1) {
-                        mobs[i].spawnMob(Values.mobYellow);
+                    else if (Math.random() >= 0.5 || i%2 == 0) {
+                        mobs[i].spawnCreeper(Values.mobYellow);
                     }
                     break;
                 }
@@ -173,13 +158,13 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (!isFirst && health > 0 && !isWinner) {
+            if (!isFirst && gamerHealth > 0 && !isWinner) {
                 room.physic();
                 mobSpawner();
                 int i = 0;
                 while (i < mobs.length) {
                     if (mobs[i].inGame) {
-                        mobs[i].physic();
+                        mobs[i].creeperPhysic();
                     }
                     i++;
                 }

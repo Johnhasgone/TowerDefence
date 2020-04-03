@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Store {
     public static int shopWidth = 4;
-    public static int buttonSize = 70;
+    public static int buttonSize = 80;
     public static int cellSpace = 2;
     public static int awayFromRoom = 32;
     public static int iconSize = 18;
@@ -46,12 +46,12 @@ public class Store {
             if (holdsItem) {
                 if (GamePanel.coins >= buttonPrice[realId]) {
                     i = 0;
-                    while (i < GamePanel.room.blocks.length) {
+                    while (i < GamePanel.room.fields.length) {
                         int j = 0;
-                        while (j < GamePanel.room.blocks[i].length) {
-                            if (GamePanel.room.blocks[i][j].contains(GamePanel.mse)) {
-                                if (GamePanel.room.blocks[i][j].groundId != Values.road && GamePanel.room.blocks[i][j].airId == Values.air) {
-                                    GamePanel.room.blocks[i][j].airId = heldId;
+                        while (j < GamePanel.room.fields[i].length) {
+                            if (GamePanel.room.fields[i][j].contains(GamePanel.mse)) {
+                                if (GamePanel.room.fields[i][j].groundId != Values.way && GamePanel.room.fields[i][j].airId == Values.air) {
+                                    GamePanel.room.fields[i][j].airId = heldId;
                                     GamePanel.coins -= buttonPrice[realId];
                                 }
                             }
@@ -67,12 +67,12 @@ public class Store {
         if (mouseButton == 3) {
             if (!holdsItem) {
                 int i = 0;
-                while (i < GamePanel.room.blocks.length) {
+                while (i < GamePanel.room.fields.length) {
                     int j = 0;
-                    while (j < GamePanel.room.blocks[i].length) {
-                        if (GamePanel.room.blocks[i][j].contains(GamePanel.mse)) {
-                            if (GamePanel.room.blocks[i][j].groundId != Values.road && GamePanel.room.blocks[i][j].airId != Values.air) {
-                                GamePanel.room.blocks[i][j].airId = Values.air;
+                    while (j < GamePanel.room.fields[i].length) {
+                        if (GamePanel.room.fields[i][j].contains(GamePanel.mse)) {
+                            if (GamePanel.room.fields[i][j].groundId != Values.way && GamePanel.room.fields[i][j].airId != Values.air) {
+                                GamePanel.room.fields[i][j].airId = Values.air;
                             }
                         }
                         j++;
@@ -88,16 +88,15 @@ public class Store {
     private void define() {
         int i = 0;
         while (i < buttons.length) {
-            buttons[i] = new Rectangle(GamePanel.myWidth/2 - (shopWidth*(buttonSize + cellSpace))/2 +
-                    (buttonSize + cellSpace)*i, GamePanel.room.blocks[GamePanel.room.worldHeight - 1][0].y
-                    + GamePanel.room.blockSize + awayFromRoom + cellSpace, buttonSize, buttonSize);         // CHANGE THE PLACE OF BUTTONS and quantity
+            buttons[i] = new Rectangle(GamePanel.myWidth - 3 * awayFromRoom - cellSpace,(shopWidth * (buttonSize + cellSpace))/4 +
+                    (buttonSize + cellSpace) * i,  buttonSize, buttonSize);         // CHANGE THE PLACE OF BUTTONS and quantity
 //rewright this shit
             i++;
         }
 
-        buttonHealth = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y, iconSize, iconSize);
-        buttonCoins = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - (iconSize + 3)*2, iconSize, iconSize);
-        buttonKills = new Rectangle(GamePanel.room.blocks[0][0].x - 1, buttons[0].y + buttons[0].height - iconSize, iconSize, iconSize);
+        buttonHealth = new Rectangle(buttons[0].x, buttons[3].y + buttons[3].height - (iconSize + 3) * 3+ 3 * awayFromRoom, iconSize, iconSize);
+        buttonCoins = new Rectangle(buttons[0].x, buttons[3].y + buttons[3].height - (iconSize + 3) * 2 + 3 * awayFromRoom , iconSize, iconSize);
+        buttonKills = new Rectangle(buttons[0].x, buttons[3].y + buttons[3].height - iconSize - 2 + 3 * awayFromRoom , iconSize, iconSize);
     }
 
     public void draw(Graphics g) {
@@ -114,7 +113,7 @@ public class Store {
                 g.drawImage(GamePanel.tilesetAir[buttonId[i]], buttons[i].x + itemIn, buttons[i].y + itemIn, buttons[i].width - itemIn*2, buttons[i].height - itemIn*2, null);
             }
             if (buttonPrice[i] > 0) {
-                g.setFont(new Font("Courier New", Font.BOLD, 14));
+                g.setFont(new Font("Helvetica", Font.BOLD, 14));
                 g.setColor(new Color(255, 255, 255));
                 g.drawString(buttonPrice[i] + "", buttons[i].x + itemIn, buttons[i].y + iconTextY);
             }
@@ -123,9 +122,9 @@ public class Store {
         g.drawImage(GamePanel.tilesetRes[1], buttonHealth.x, buttonHealth.y, buttonHealth.width, buttonHealth.height, null);
         g.drawImage(GamePanel.tilesetRes[2], buttonCoins.x, buttonCoins.y, buttonCoins.width, buttonCoins.height, null);
         g.drawImage(GamePanel.tilesetRes[3], buttonKills.x, buttonKills.y, buttonKills.width, buttonKills.height, null);
-        g.setFont(new Font("Courier New", Font.BOLD, 14));
+        g.setFont(new Font("Helvetica", Font.BOLD, 14));
         g.setColor(new Color(255, 255, 255));
-        g.drawString("" + GamePanel.health, buttonHealth.x + buttonHealth.width + iconSpace, buttonHealth.y + iconTextY);
+        g.drawString("" + GamePanel.gamerHealth, buttonHealth.x + buttonHealth.width + iconSpace, buttonHealth.y + iconTextY);
         g.drawString("" + GamePanel.coins, buttonCoins.x + buttonCoins.width + iconSpace, buttonCoins.y + iconTextY);
         g.drawString("" + (GamePanel.killsToWin - GamePanel.killed), buttonKills.x + buttonKills.width + iconSpace, buttonKills.y + iconTextY);
         g.drawString("Level: " + GamePanel.level, buttonKills.x, buttonKills.y +iconSize + iconTextY);

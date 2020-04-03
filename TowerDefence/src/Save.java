@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Save {
@@ -8,13 +7,13 @@ public class Save {
             Scanner scanner = new Scanner(loadPath);
             while (scanner.hasNext()) {
                 GamePanel.coins = scanner.nextInt();
-                Values.walkSpeed = scanner.nextInt();
+                Values.creeperWalkSpeed = scanner.nextInt();
                 GamePanel.killsToWin = scanner.nextInt();
                 int i = 0;
-                while (i < GamePanel.room.blocks.length) {
+                while (i < GamePanel.room.fields.length) {
                     int j = 0;
-                    while (j < GamePanel.room.blocks[0].length) {
-                        GamePanel.room.blocks[i][j].groundId = scanner.nextInt();
+                    while (j < GamePanel.room.fields[0].length) {
+                        GamePanel.room.fields[i][j].groundId = scanner.nextInt();
                         j++;
                     }
 
@@ -22,10 +21,10 @@ public class Save {
                 }
 
                 i = 0;
-                while (i < GamePanel.room.blocks.length) {
+                while (i < GamePanel.room.fields.length) {
                     int j = 0;
-                    while (j < GamePanel.room.blocks[0].length) {
-                        GamePanel.room.blocks[i][j].airId = scanner.nextInt();
+                    while (j < GamePanel.room.fields[0].length) {
+                        GamePanel.room.fields[i][j].airId = scanner.nextInt();
                         j++;
                     }
 

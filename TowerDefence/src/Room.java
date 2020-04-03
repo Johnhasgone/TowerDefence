@@ -3,23 +3,23 @@ import java.awt.*;
 public class Room {
     public static int worldWidth = Values.width;
     public static int worldHeight = Values.height;
-    public static int blockSize = Values.blockSize;
+    public static int fieldSize = Values.blockSize;
 
-    public Block[][] blocks;
+    public Field[][] fields;
 
     public Room() {
         define();
     }
 
     private void define() {
-        blocks = new Block[worldHeight][worldWidth];
+        fields = new Field[worldHeight][worldWidth];
 
         int i = 0;
-        while (i < blocks.length) {
+        while (i < fields.length) {
             int j = 0;
-            while (j < blocks[i].length) {
-                blocks[i][j] = new Block(GamePanel.myWidth / 2 - worldWidth * blockSize / 2 + j * blockSize,
-                                         i * blockSize, blockSize, blockSize, Values.ground, Values.air);
+            while (j < fields[i].length) {
+                fields[i][j] = new Field(GamePanel.myWidth / 2 - worldWidth * fieldSize / 2 + j * fieldSize,
+                                         i * fieldSize, fieldSize, fieldSize, Values.ground, Values.air);
                 j++;
             }
             i++;
@@ -28,19 +28,19 @@ public class Room {
 
     public void draw(Graphics g) {
         int i = 0;
-        while (i < blocks.length) {
+        while (i < fields.length) {
             int j = 0;
-            while (j < blocks[i].length) {
-                blocks[i][j].draw(g);
+            while (j < fields[i].length) {
+                fields[i][j].draw(g);
                 j++;
             }
             i++;
         }
         i = 0;
-        while (i < blocks.length) {
+        while (i < fields.length) {
             int j = 0;
-            while (j < blocks[i].length) {
-                blocks[i][j].fight(g);
+            while (j < fields[i].length) {
+                fields[i][j].fight(g);
                 j++;
             }
             i++;
@@ -49,10 +49,10 @@ public class Room {
 
     public void physic() {          //WHAT IS IT
         int i = 0;
-        while (i < blocks.length) {
+        while (i < fields.length) {
             int j = 0;
-            while (j < blocks[i].length) {
-                blocks[i][j].physic();
+            while (j < fields[i].length) {
+                fields[i][j].physic();
                 j++;
             }
             i++;
