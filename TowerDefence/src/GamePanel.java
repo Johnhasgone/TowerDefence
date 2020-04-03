@@ -4,10 +4,10 @@ import java.io.File;
 
 /** Main running component with all the game's physics.  */
 
-public class GamePanel extends JPanel implements Runnable {
-    public Thread thread = new Thread(this);
+public class GamePanel extends JPanel implements Runnable { // Runnable - реализация интерфейса для создания поток
+    public Thread thread = new Thread(this); // создание и передача параметров новому потоку
 
-    public static int myWidth, myHeight;
+    public static int myWidth, myHeight; // в этих границах находится зона нашего класса
     public static int coins;
     public static int gamerHealth;
     public static int killed = 0, killsToWin = 0, level = 1;
@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static boolean isFirst = true;
     public static boolean isWinner = false;
 
-    public static Point mouseEvent = new Point(0, 0);
+    public static Point mouseEvent = new Point(0, 0); // где расположен курсор
 
     public static World world;
     public static Load load;
@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel(Frame frame) {
         frame.addMouseListener(new KeyHandler());
         frame.addMouseMotionListener(new KeyHandler());
-        thread.start();
+        thread.start(); //начало потока
     }
 
     public static void hasWon() {
@@ -42,14 +42,14 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void define() {
-        world = new World();
-        load = new Load();
-        shop = new Shop();
+    public void define() { // define определяет все методы, которые мы используем в World
+        world = new World(); // новое пространство
+        load = new Load(); // загрузка уровней
+        shop = new Shop(); // магазин
         gamerHealth = Values.playerHealth;
 
 
-
+        // текстуры для объектов
         groundImages[0] = new ImageIcon("images/space.png").getImage();
         groundImages[1] = new ImageIcon("images/spaceWay.jpg").getImage();
         airImages[0] = new ImageIcon("images/earth.png").getImage();
@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
             i++;
         }
 
-        shop.draw(g);
+        shop.draw(g); // отрисовка магазина
 
         /* prints "GAME OVER */
 
@@ -127,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
             int i = 0;
             while (i < creepers.length) {
                 if (!creepers[i].inGame) {
-                    if (level == 5 && Math.random() < 0.2) {
+                    if (level == 5 && Math.random() < 0.4) {
                         creepers[i].spawnCreeper(Values.creeperBoss);
                     }
                     else if(Math.random() < 0.5 || i%2 == 1) {
@@ -148,7 +148,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-    public void run() {
+    public void run() { //запуск "игрового" потока со всеми параметрами, необходимыми для процесса
         while (true) {
             if (!isFirst && gamerHealth > 0 && !isWinner) {
                 world.physic();
@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-            repaint();
+            repaint(); // перерисовка
 
             try {
                 Thread.sleep(1);

@@ -38,7 +38,7 @@ public class Creeper extends Rectangle {
         this.creeperHealth = creeperSize;
         inGame = true;
     }
-
+    // при условии, что враг достиг базы
     public void deleteCreeper() {
         inGame = false;
         direction = right;
@@ -62,9 +62,9 @@ public class Creeper extends Rectangle {
             GamePanel.gamerHealth -= 10;
         }
     }
-
+    // поиск направления
     public int creeperWalkFrame = 0, creeperWalkSpeed = Values.creeperWalkSpeed;
-    public void creeperPhysic() throws Exception {
+    public void creeperPhysic() {
         if (creeperWalkFrame >= creeperWalkSpeed) {
             if (direction == right) {
                 x++;
@@ -124,7 +124,7 @@ public class Creeper extends Rectangle {
             creeperWalkFrame++;
         }
     }
-
+    // отрисовка полоски здоровья
     public void draw(Graphics g) {
         if (inGame) {
             g.drawImage(GamePanel.creeperImages[creeperId], x, y, width, height, null);

@@ -7,18 +7,18 @@ import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
 
-    public static String title = "TowerDefence - Kill'Em All!";
+    public static String title = "TowerDefence - Kill'Em All!"; //заголовок окна, используется в конструкторе класса Frame
     public static Dimension size = new Dimension(1200,730);
-    private JPanel buttonPanel;
+    private JPanel buttonPanel; // создание верхней панели с кнопками
     public GamePanel gameScreen;
 
-    public MainWindow() {
+    public MainWindow() { //конструктор класса Frame
         setLayout(new BorderLayout());
-        setTitle(title);
-        setSize(size);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle(title); // определить заголовок
+        setSize(size);  // определить размер окна
+        setResizable(false);  // можно ли изменять размер
+        setLocationRelativeTo(null); // относительное ли положение
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // как выйти из программы
 
         initComponents();
 
@@ -26,13 +26,13 @@ public class MainWindow extends JFrame {
     }
 
     public void initComponents() {
-        buttonPanel = new JPanel(new GridLayout(1, 9));
+        buttonPanel = new JPanel(new GridLayout(1, 3)); // для заполнения ВСЕЙ зоны Frame объектами
         gameScreen = new GamePanel(this);
         add(buttonPanel, BorderLayout.NORTH);
         setButtons();
         add(gameScreen, BorderLayout.CENTER);
     }
-
+    // настройка кнопок управления в верхней части окна
     public void setButtons() {
         JButton level;
         JButton restart;
@@ -53,7 +53,7 @@ public class MainWindow extends JFrame {
         buttonPanel.add(exit, 0, 2);
 
     }
-
+    // обработка событий для кнопок
     public ActionListener getActionListener(String action) {
         switch (action) {
             case "level":
@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
                 return actionEvent -> System.exit(0);
         }
     }
-
+    // выбор уровня во всплывающем окне (choose level)
     public String setLevel() {
         Object[] possibilities = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String ret = (String) JOptionPane.showInputDialog(this, "Choose the level: ",

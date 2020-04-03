@@ -5,11 +5,11 @@ import java.awt.*;
  * Choosing a defender goes with a click on it and grabbing to place to set*/
 
 public class Shop {
-    public static int shopWidth = 4;
+    public static int shopWidth = 4; //4 предмета в магазине
     public static int buttonSize = 80;
-    public static int cellSpace = 2;
-    public static int awayFromRoom = 32;
-    public static int iconSize = 18;
+    public static int cellSpace = 2; //пространство между иконками в Store
+    public static int awayFromRoom = 32; // расположение Store
+    public static int iconSize = 18; // для расположения иконок монет и здоровья
     public static int iconSpace = 3;
     public static int iconTextY = 15;
     public static int itemIn = 4;
@@ -19,8 +19,8 @@ public class Shop {
     public static int[] buttonPrice = {10, 20, 30, 0};
 
     public Rectangle[] buttons = new Rectangle[shopWidth];
-    public Rectangle buttonHealth;
-    public Rectangle buttonCoins;
+    public Rectangle buttonHealth; //добавление иконки здоровья
+    public Rectangle buttonCoins; //добавление иконки для монет
     public Rectangle buttonKills;
 
     public boolean holdsItem = false;
@@ -95,7 +95,7 @@ public class Shop {
             }
         }
     }
-
+    // инициализация и настройка размера кнопок для магазина
     private void define() {
         int i = 0;
         while (i < buttons.length) {
@@ -103,7 +103,7 @@ public class Shop {
                     (buttonSize + cellSpace) * i,  buttonSize, buttonSize);
             i++;
         }
-
+        // инициализация и настройка размера иконок
         buttonHealth = new Rectangle(buttons[0].x, buttons[3].y + buttons[3].height - (iconSize + 3) * 3+ 3 * awayFromRoom, iconSize, iconSize);
         buttonCoins = new Rectangle(buttons[0].x, buttons[3].y + buttons[3].height - (iconSize + 3) * 2 + 3 * awayFromRoom , iconSize, iconSize);
         buttonKills = new Rectangle(buttons[0].x, buttons[3].y + buttons[3].height - iconSize - 2 + 3 * awayFromRoom , iconSize, iconSize);

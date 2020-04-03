@@ -18,7 +18,7 @@ public class Field extends Rectangle {
     public Field(int x, int y, int width, int height, int groundId, int airId) {
         setBounds(x , y, width, height);
         defenderSquare = new Rectangle(x - defenderSquareSize /2, y - defenderSquareSize /2,
-                                width + defenderSquareSize, height + defenderSquareSize);
+                                width + defenderSquareSize, height + defenderSquareSize); // область поражения для башни
         this.groundId = groundId;
         this.airId = airId;
     }
@@ -29,7 +29,7 @@ public class Field extends Rectangle {
         if (airId != Values.air)
             g.drawImage(GamePanel.airImages[airId], x, y, width, height, null);
     }
-
+    // процессы при стрельбе башни
     public void physic() {
         if (shot != -1 && defenderSquare.intersects(GamePanel.creepers[shot]))
             shooting = true;
@@ -55,7 +55,7 @@ public class Field extends Rectangle {
                 }
             }
         }
-
+        // уменьшение здоровья врага при стрельбе башни
         if (shooting) {
             if (healthLosingFrame >= healthLosingTime) {
                 if (airId == Values.airDefender1)
@@ -80,7 +80,7 @@ public class Field extends Rectangle {
     public void getMoney(int mobId) {
         GamePanel.coins += Values.deathReward[mobId];
     }
-
+    // прорисовка стрельбы
     public void fight(Graphics g) {
         if (shooting) {
             if (airId == Values.airDefender1)
