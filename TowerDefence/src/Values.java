@@ -11,13 +11,12 @@ public class Values {
     public static int maxLevel = 10;
 
     public static int creeperAir = -1;
-    public static int mobGreen = 0;
-    public static int mobYellow = 1;
-    public static int mobRed = 2;
+    public static int creeperInvader = 0;
+    public static int creeperDoom = 1;
+    public static int creeperBoss = 2;
 
 
     public static int spawnTime = 2400;
-
     public static int spawnFrame = 0;
 
     public static int[] deathReward = {5, 7, 10};
@@ -35,5 +34,5 @@ public class Values {
     public static String partWinner = "EXCELLENT!!!   PLEASE, WAIT FOR THE NEXT LEVEL";
     public static String absoluteWinner = "YOU'RE AWESOME!!!";
 
-    public static int health = 10;
+    public static int playerHealth = 10;
 }

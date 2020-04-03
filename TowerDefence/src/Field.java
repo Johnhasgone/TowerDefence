@@ -24,23 +24,23 @@ public class Field extends Rectangle {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(GamePanel.tilesetGround[groundId], x, y, width, height, null);
+        g.drawImage(GamePanel.groundImages[groundId], x, y, width, height, null);
 
         if (airId != Values.air)
-            g.drawImage(GamePanel.tilesetAir[airId], x, y, width, height, null);
+            g.drawImage(GamePanel.airImages[airId], x, y, width, height, null);
     }
 
     public void physic() {
-        if (shot != -1 && defenderSquare.intersects(GamePanel.mobs[shot]))
+        if (shot != -1 && defenderSquare.intersects(GamePanel.creepers[shot]))
             shooting = true;
         else
             shooting = false;
         if (!shooting) {
             if (airId == Values.airDefender1 || airId == Values.airDefender2 || airId == Values.airDefender3) {
                 int i = 0;
-                while (i < GamePanel.mobs.length) {
-                    if (GamePanel.mobs[i].inGame) {
-                        if (defenderSquare.intersects(GamePanel.mobs[i])) {
+                while (i < GamePanel.creepers.length) {
+                    if (GamePanel.creepers[i].inGame) {
+                        if (defenderSquare.intersects(GamePanel.creepers[i])) {
                             shooting = true;
                             shot = i;
                             if (airId == Values.airDefender1)
@@ -59,17 +59,17 @@ public class Field extends Rectangle {
         if (shooting) {
             if (healthLosingFrame >= healthLosingTime) {
                 if (airId == Values.airDefender1)
-                    GamePanel.mobs[shot].EnemyLooseHealth(Values.shotStrength1);
+                    GamePanel.creepers[shot].EnemyLooseHealth(Values.shotStrength1);
                 if (airId == Values.airDefender2)
-                    GamePanel.mobs[shot].EnemyLooseHealth(Values.shotStrength2);
+                    GamePanel.creepers[shot].EnemyLooseHealth(Values.shotStrength2);
                 if (airId == Values.airDefender3)
-                    GamePanel.mobs[shot].EnemyLooseHealth(Values.shotStrength3);
+                    GamePanel.creepers[shot].EnemyLooseHealth(Values.shotStrength3);
                 healthLosingFrame = 0;
             } else
                 healthLosingFrame++;
 
 
-            if (!GamePanel.mobs[shot].inGame) {
+            if (!GamePanel.creepers[shot].inGame) {
                 shooting = false;
                 shot = -1;
                 GamePanel.hasWon();
@@ -90,8 +90,8 @@ public class Field extends Rectangle {
             if (airId == Values.airDefender3)
                 g.setColor(Color.RED);
             g.drawLine(x + width/2, y + height/2,
-                    GamePanel.mobs[shot].x + GamePanel.mobs[shot].width/2,
-                    GamePanel.mobs[shot].y + GamePanel.mobs[shot].height/2);
+                    GamePanel.creepers[shot].x + GamePanel.creepers[shot].width/2,
+                    GamePanel.creepers[shot].y + GamePanel.creepers[shot].height/2);
 
         }
     }

@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.regex.Pattern;
+
+/** Drawing the main window of the game. Contains: button panel to operate the game (levels, restart, exit),
+ * JPanel with all the game images and physics, and option pane to chose the level */
 
 public class MainWindow extends JFrame {
 
@@ -25,7 +26,6 @@ public class MainWindow extends JFrame {
     }
 
     public void initComponents() {
-        //setLayout(new GridLayout(1, 1, 0, 0));
         buttonPanel = new JPanel(new GridLayout(1, 9));
         gameScreen = new GamePanel(this);
         add(buttonPanel, BorderLayout.NORTH);
@@ -62,14 +62,9 @@ public class MainWindow extends JFrame {
                         gameScreen.define();
                 };
             case "restart":
-                return actionEvent -> {
-                        gameScreen.define();
-
-                };
+                return actionEvent -> gameScreen.define();
             case "exit":
-                return actionEvent -> {
-                    System.exit(0);
-                };
+                return actionEvent -> System.exit(0);
             default:
                 return actionEvent -> System.exit(0);
         }
@@ -77,8 +72,9 @@ public class MainWindow extends JFrame {
 
     public String setLevel() {
         Object[] possibilities = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-        return (String) JOptionPane.showInputDialog(this, "Choose the level: ",
+        String ret = (String) JOptionPane.showInputDialog(this, "Choose the level: ",
                 "Level", JOptionPane.PLAIN_MESSAGE,
                 new ImageIcon("images/iconDialog.png"), possibilities, "1");
+        return ret == null ? "1" : ret;
     }
 }

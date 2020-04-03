@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+/** Main running component with all the game's physics.  */
+
 public class GamePanel extends JPanel implements Runnable {
     public Thread thread = new Thread(this);
 
@@ -12,26 +14,24 @@ public class GamePanel extends JPanel implements Runnable {
     public static int winTime = 4000, winFrame = 0;
 
     public static boolean isFirst = true;
-    public static boolean isDebug = false;
     public static boolean isWinner = false;
 
-    public static Point mse = new Point(0, 0);
+    public static Point mouseEvent = new Point(0, 0);
 
-    public static Room room;
-    public static Save save;
-    public static Store store;
-    public static Creeper[] mobs = new Creeper[100];
+    public static World world;
+    public static Load load;
+    public static Shop shop;
+    public static Creeper[] creepers = new Creeper[100];
 
-    public static Image[] tilesetGround = new Image[2];
-    public static Image[] tilesetAir = new Image[5];
-    public static Image[] tilesetRes = new Image[4];
-    public static Image[] tilesetMob = new Image[3];
+    public static Image[] groundImages = new Image[2];
+    public static Image[] airImages = new Image[5];
+    public static Image[] resImages = new Image[4];
+    public static Image[] creeperImages = new Image[3];
 
 
     public GamePanel(Frame frame) {
-        //super(new BorderLayout());
-        frame.addMouseListener(new KeyHandle());
-        frame.addMouseMotionListener(new KeyHandle());
+        frame.addMouseListener(new KeyHandler());
+        frame.addMouseMotionListener(new KeyHandler());
         thread.start();
     }
 
@@ -43,35 +43,35 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void define() {
-        room = new Room();
-        save = new Save();
-        store = new Store();
-        gamerHealth = Values.health;
+        world = new World();
+        load = new Load();
+        shop = new Shop();
+        gamerHealth = Values.playerHealth;
 
 
 
-        tilesetGround[0] = new ImageIcon("images/space.png").getImage();
-        tilesetGround[1] = new ImageIcon("images/spaceWay.jpg").getImage();
-        tilesetAir[0] = new ImageIcon("images/earth.png").getImage();
-        tilesetAir[1] = new ImageIcon("images/trash.png").getImage();
-        tilesetAir[2] = new ImageIcon("images/defender.png").getImage();
-        tilesetAir[3] = new ImageIcon("images/defender2.png").getImage();
-        tilesetAir[4] = new ImageIcon("images/defender3.png").getImage();
+        groundImages[0] = new ImageIcon("images/space.png").getImage();
+        groundImages[1] = new ImageIcon("images/spaceWay.jpg").getImage();
+        airImages[0] = new ImageIcon("images/earth.png").getImage();
+        airImages[1] = new ImageIcon("images/trash.png").getImage();
+        airImages[2] = new ImageIcon("images/defender.png").getImage();
+        airImages[3] = new ImageIcon("images/defender2.png").getImage();
+        airImages[4] = new ImageIcon("images/defender3.png").getImage();
 
-        tilesetRes[0] = new ImageIcon("images/cell.png").getImage();
-        tilesetRes[1] = new ImageIcon("images/life.png").getImage();
-        tilesetRes[2] = new ImageIcon("images/coin.png").getImage();
-        tilesetRes[3] = new ImageIcon("images/mob.png").getImage();
+        resImages[0] = new ImageIcon("images/cell.png").getImage();
+        resImages[1] = new ImageIcon("images/life.png").getImage();
+        resImages[2] = new ImageIcon("images/coin.png").getImage();
+        resImages[3] = new ImageIcon("images/mob.png").getImage();
 
-        tilesetMob[0] = new ImageIcon("images/mob.png").getImage();
-        tilesetMob[1] = new ImageIcon("images/doom.png").getImage();
-        tilesetMob[2] = new ImageIcon("images/ghost.png").getImage();
+        creeperImages[0] = new ImageIcon("images/mob.png").getImage();
+        creeperImages[1] = new ImageIcon("images/doom.png").getImage();
+        creeperImages[2] = new ImageIcon("images/ghost.png").getImage();
 
-        save.loadSave(new File("save/level" + level + ".jhg"));
+        load.loadLevel(new File("save/level" + level + ".jhg"));
 
         int i = 0;
-        while (i < mobs.length) {
-            mobs[i] = new Creeper();
+        while (i < creepers.length) {
+            creepers[i] = new Creeper();
             i++;
         }
     }
@@ -85,28 +85,20 @@ public class GamePanel extends JPanel implements Runnable {
             isFirst = false;
         }
         g.setColor(new Color(56, 100, 67));
-        g.fillRect(0, 0, getWidth(), getHeight());     //LOOK
-        g.setColor(new Color(10, 20, 70));
-        g.drawLine(room.fields[0][0].x - 1, 0, room.fields[0][0].x - 1,
-                room.fields[Room.worldHeight-1][0].y + Room.fieldSize + 1); // DRAWING THE LEFT LINE
-        g.drawLine(room.fields[0][Room.worldWidth - 1].x + Room.fieldSize + 1, 0,
-                room.fields[0][Room.worldWidth - 1].x + Room.fieldSize + 1,
-                room.fields[Room.worldHeight-1][Room.worldWidth - 1].y + Room.fieldSize + 1); // DRAWING THE right LINE
-        g.drawLine(room.fields[0][0].x - 1, room.fields[Room.worldHeight-1][0].y + Room.fieldSize + 1,
-                room.fields[0][Room.worldWidth - 1].x + Room.fieldSize + 1,
-                room.fields[Room.worldHeight-1][Room.worldWidth - 1].y + Room.fieldSize + 1); // DRAWING THE BOTTOM LINE
-
-        room.draw(g);                                          // Drawing the room
+        g.fillRect(0, 0, getWidth(), getHeight());
+        world.draw(g);
 
         int i = 0;
-        while (i < mobs.length) {
-            if (mobs[i].inGame) {
-                mobs[i].draw(g);
+        while (i < creepers.length) {
+            if (creepers[i].inGame) {
+                creepers[i].draw(g);
             }
             i++;
         }
 
-        store.draw(g);
+        shop.draw(g);
+
+        /* prints "GAME OVER */
 
         if (gamerHealth < 1) {
             g.setColor(Color.BLACK);
@@ -116,33 +108,33 @@ public class GamePanel extends JPanel implements Runnable {
             g.drawString(Values.over, MainWindow.size.width/2 - Values.over.length()/2*17, MainWindow.size.height/2);
         }
 
+        /* prints Congratulations to player */
+
         if (isWinner) {
-            g.setColor(Color.BLACK);
-            g.fillRect(MainWindow.size.width/8, MainWindow.size.height/4, MainWindow.size.width/4*3, MainWindow.size.height/5);
-            g.setColor(Color.WHITE);
+            g.setColor(Color.GREEN);
             g.setFont(new Font("Helvetica", Font.BOLD, 26));
             if (level == Values.maxLevel) {
                 g.drawString(Values.absoluteWinner, MainWindow.size.width/2 - Values.absoluteWinner.length()/2*15, 300);
             } else {
-                g.drawString(Values.partWinner, MainWindow.size.width/2 - Values.partWinner.length()/2*15, 300);                   // Window with exit or next level
+                g.drawString(Values.partWinner, MainWindow.size.width/2 - Values.partWinner.length()/2*15, 300);
             }
         }
     }
 
     public int spawnTime = Values.spawnTime, spawnFrame = Values.spawnFrame;
-    public void mobSpawner() {
+    public void creeperSpawner() {
         if (spawnFrame >= spawnTime) {
             int i = 0;
-            while (i < mobs.length) {
-                if (!mobs[i].inGame) {
+            while (i < creepers.length) {
+                if (!creepers[i].inGame) {
                     if (level == 5 && Math.random() < 0.2) {
-                        mobs[i].spawnCreeper(Values.mobRed);
+                        creepers[i].spawnCreeper(Values.creeperBoss);
                     }
                     else if(Math.random() < 0.5 || i%2 == 1) {
-                        mobs[i].spawnCreeper(Values.mobGreen);
+                        creepers[i].spawnCreeper(Values.creeperInvader);
                     }
                     else if (Math.random() >= 0.5 || i%2 == 0) {
-                        mobs[i].spawnCreeper(Values.mobYellow);
+                        creepers[i].spawnCreeper(Values.creeperDoom);
                     }
                     break;
                 }
@@ -155,16 +147,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    @Override
+
     public void run() {
         while (true) {
             if (!isFirst && gamerHealth > 0 && !isWinner) {
-                room.physic();
-                mobSpawner();
+                world.physic();
+                creeperSpawner();
                 int i = 0;
-                while (i < mobs.length) {
-                    if (mobs[i].inGame) {
-                        mobs[i].creeperPhysic();
+                while (i < creepers.length) {
+                    if (creepers[i].inGame) {
+                        try {
+                            creepers[i].creeperPhysic();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                     i++;
                 }
@@ -185,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-            repaint();                              //LOOK
+            repaint();
 
             try {
                 Thread.sleep(1);

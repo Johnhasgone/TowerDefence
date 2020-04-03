@@ -1,13 +1,15 @@
 import java.awt.*;
 
-public class Room {
+/** World contains fields with game objects, initialises and sets them */
+
+public class World {
     public static int worldWidth = Values.width;
     public static int worldHeight = Values.height;
     public static int fieldSize = Values.blockSize;
 
     public Field[][] fields;
 
-    public Room() {
+    public World() {
         define();
     }
 
@@ -47,7 +49,7 @@ public class Room {
         }
     }
 
-    public void physic() {          //WHAT IS IT
+    public void physic() {
         int i = 0;
         while (i < fields.length) {
             int j = 0;

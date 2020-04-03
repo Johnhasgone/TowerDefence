@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Creeper extends Rectangle {
     public int xField, yField;
-    public int creeperSize = Room.fieldSize;
+    public int creeperSize = World.fieldSize;
     public int creeperWalk = 0;
     public int up = 0, down = 1, left = 3, right = 2;
     public int direction = right;
@@ -25,9 +25,9 @@ public class Creeper extends Rectangle {
 
     public void spawnCreeper(int mobId) {
         int i = 0;
-        while (i < GamePanel.room.fields.length) {
-            if (GamePanel.room.fields[i][0].groundId == Values.way) {
-                setBounds(GamePanel.room.fields[i][0].x, GamePanel.room.fields[i][0].y, creeperSize, creeperSize);
+        while (i < GamePanel.world.fields.length) {
+            if (GamePanel.world.fields[i][0].groundId == Values.way) {
+                setBounds(GamePanel.world.fields[i][0].x, GamePanel.world.fields[i][0].y, creeperSize, creeperSize);
                 xField = 0;
                 yField = i;
             }
@@ -49,22 +49,22 @@ public class Creeper extends Rectangle {
         direction = right;
         creeperWalk = 0;
         GamePanel.killed++;
-        GamePanel.room.fields[0][0].getMoney(creeperId);
+        GamePanel.world.fields[0][0].getMoney(creeperId);
     }
 
     public void gamerLoseHealth() {
-        if (creeperId == Values.mobGreen)
+        if (creeperId == Values.creeperInvader)
             GamePanel.gamerHealth--;
-        if (creeperId == Values.mobYellow) {
+        if (creeperId == Values.creeperDoom) {
             GamePanel.gamerHealth -= 2;
         }
-        if (creeperId == Values.mobRed) {
+        if (creeperId == Values.creeperBoss) {
             GamePanel.gamerHealth -= 10;
         }
     }
 
     public int creeperWalkFrame = 0, creeperWalkSpeed = Values.creeperWalkSpeed;
-    public void creeperPhysic() {
+    public void creeperPhysic() throws Exception {
         if (creeperWalkFrame >= creeperWalkSpeed) {
             if (direction == right) {
                 x++;
@@ -77,7 +77,7 @@ public class Creeper extends Rectangle {
             }
             creeperWalk++;
 
-            if (creeperWalk == Room.fieldSize) {
+            if (creeperWalk == World.fieldSize) {
                 if (direction == right) {
                     xField++;
                     hasRight = true;
@@ -93,48 +93,26 @@ public class Creeper extends Rectangle {
                     hasDownward = true;
                 }
                 if (!hasUpward) {
-                    try {
-                        if (GamePanel.room.fields[yField + 1][xField].groundId == Values.way) {
-                            direction = down;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }                                         //TRY CATCH
+                    if (GamePanel.world.fields[yField + 1][xField].groundId == Values.way)
+                        direction = down;
                 }
                 if (!hasDownward) {
-                    try {
-                        if (GamePanel.room.fields[yField - 1][xField].groundId == Values.way) {
-                            direction = up;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }                                         //TRY CATCH
+                    if (GamePanel.world.fields[yField - 1][xField].groundId == Values.way)
+                        direction = up;
                 }
                 if (!hasLeft) {
-                    try {
-                        if (xField != Room.worldWidth - 1 && GamePanel.room.fields[yField][xField + 1].groundId == Values.way) {
-                            direction = right;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }                                         //TRY CATCH
+                    if (xField != World.worldWidth - 1 && GamePanel.world.fields[yField][xField + 1].groundId == Values.way)
+                        direction = right;
                 }
-
                 if (!hasRight) {
-                    try {
-                        if (GamePanel.room.fields[yField][xField - 1].groundId == Values.way) {
-                            direction = left;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }                                         //TRY CATCH
+                    if (GamePanel.world.fields[yField][xField - 1].groundId == Values.way) {
+                        direction = left;
+                    }
                 }
-
-                if (GamePanel.room.fields[yField][xField].airId == Values.airEarth) {
+                if (GamePanel.world.fields[yField][xField].airId == Values.airEarth) {
                     deleteCreeper();
                     gamerLoseHealth();
                 }
-
                 hasUpward = false;
                 hasDownward = false;
                 hasLeft = false;
@@ -149,11 +127,11 @@ public class Creeper extends Rectangle {
 
     public void draw(Graphics g) {
         if (inGame) {
-            g.drawImage(GamePanel.tilesetMob[creeperId], x, y, width, height, null);
+            g.drawImage(GamePanel.creeperImages[creeperId], x, y, width, height, null);
             g.setColor(Color.BLACK);
             g.fillRect(x, y - (healthSpace + healthHeight), width, healthHeight);
 
-            g.setColor(Color.GREEN);
+            g.setColor(Color.RED);
             g.fillRect(x, y - (healthSpace + healthHeight), creeperHealth, healthHeight);
 
             g.setColor(Color.BLACK);

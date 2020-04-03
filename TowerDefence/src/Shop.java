@@ -1,6 +1,10 @@
 import java.awt.*;
 
-public class Store {
+/** Shop with three types of defenders, different prices and different strength of shot.
+ * Contains icons for life, coins, creepers to kill on the level and number of level
+ * Choosing a defender goes with a click on it and grabbing to place to set*/
+
+public class Shop {
     public static int shopWidth = 4;
     public static int buttonSize = 80;
     public static int cellSpace = 2;
@@ -21,37 +25,42 @@ public class Store {
 
     public boolean holdsItem = false;
 
-    public Store() {
+    public Shop() {
         define();
     }
 
     public void click(int mouseButton) {
+
+        /* holding the defender */
+
         if (mouseButton == 1) {
             int i = 0;
             while (i < buttons.length) {
-                if (buttons[i].contains(GamePanel.mse)) {
+                if (buttons[i].contains(GamePanel.mouseEvent)) {
                     if (buttonId[i] != Values.air) {
                         if (buttonId[i] == Values.airTrash) {
                             holdsItem = false;
                         } else {
                             heldId = buttonId[i];
-                            realId = i;                 //rewrite
+                            realId = i;
                             holdsItem = true;
                         }
                     }
                 }
                 i++;
             }
-//Setting the tower on the ground
+
+            /* Setting the defender on the ground */
+
             if (holdsItem) {
                 if (GamePanel.coins >= buttonPrice[realId]) {
                     i = 0;
-                    while (i < GamePanel.room.fields.length) {
+                    while (i < GamePanel.world.fields.length) {
                         int j = 0;
-                        while (j < GamePanel.room.fields[i].length) {
-                            if (GamePanel.room.fields[i][j].contains(GamePanel.mse)) {
-                                if (GamePanel.room.fields[i][j].groundId != Values.way && GamePanel.room.fields[i][j].airId == Values.air) {
-                                    GamePanel.room.fields[i][j].airId = heldId;
+                        while (j < GamePanel.world.fields[i].length) {
+                            if (GamePanel.world.fields[i][j].contains(GamePanel.mouseEvent)) {
+                                if (GamePanel.world.fields[i][j].groundId != Values.way && GamePanel.world.fields[i][j].airId == Values.air) {
+                                    GamePanel.world.fields[i][j].airId = heldId;
                                     GamePanel.coins -= buttonPrice[realId];
                                 }
                             }
@@ -63,16 +72,18 @@ public class Store {
                 }
             }
         }
-        //Removing the tower
+
+        /* Removing the defender */
+
         if (mouseButton == 3) {
             if (!holdsItem) {
                 int i = 0;
-                while (i < GamePanel.room.fields.length) {
+                while (i < GamePanel.world.fields.length) {
                     int j = 0;
-                    while (j < GamePanel.room.fields[i].length) {
-                        if (GamePanel.room.fields[i][j].contains(GamePanel.mse)) {
-                            if (GamePanel.room.fields[i][j].groundId != Values.way && GamePanel.room.fields[i][j].airId != Values.air) {
-                                GamePanel.room.fields[i][j].airId = Values.air;
+                    while (j < GamePanel.world.fields[i].length) {
+                        if (GamePanel.world.fields[i][j].contains(GamePanel.mouseEvent)) {
+                            if (GamePanel.world.fields[i][j].groundId != Values.way && GamePanel.world.fields[i][j].airId != Values.air) {
+                                GamePanel.world.fields[i][j].airId = Values.air;
                             }
                         }
                         j++;
@@ -89,8 +100,7 @@ public class Store {
         int i = 0;
         while (i < buttons.length) {
             buttons[i] = new Rectangle(GamePanel.myWidth - 3 * awayFromRoom - cellSpace,(shopWidth * (buttonSize + cellSpace))/4 +
-                    (buttonSize + cellSpace) * i,  buttonSize, buttonSize);         // CHANGE THE PLACE OF BUTTONS and quantity
-//rewright this shit
+                    (buttonSize + cellSpace) * i,  buttonSize, buttonSize);
             i++;
         }
 
@@ -103,14 +113,14 @@ public class Store {
 
         int i = 0;
         while (i < buttons.length) {
-            if (buttons[i].contains(GamePanel.mse)) {
+            if (buttons[i].contains(GamePanel.mouseEvent)) {
                 g.setColor(new Color(255, 255, 255, 100));
                 g.fillRect(buttons[i].x, buttons[i].y, buttons[i].width, buttons[i].height);
             }
 
-            g.drawImage(GamePanel.tilesetRes[0], buttons[i].x, buttons[i].y, buttons[i].width, buttons[i].height, null);
+            g.drawImage(GamePanel.resImages[0], buttons[i].x, buttons[i].y, buttons[i].width, buttons[i].height, null);
             if (buttonId[i] != Values.air) {
-                g.drawImage(GamePanel.tilesetAir[buttonId[i]], buttons[i].x + itemIn, buttons[i].y + itemIn, buttons[i].width - itemIn*2, buttons[i].height - itemIn*2, null);
+                g.drawImage(GamePanel.airImages[buttonId[i]], buttons[i].x + itemIn, buttons[i].y + itemIn, buttons[i].width - itemIn*2, buttons[i].height - itemIn*2, null);
             }
             if (buttonPrice[i] > 0) {
                 g.setFont(new Font("Helvetica", Font.BOLD, 14));
@@ -119,9 +129,9 @@ public class Store {
             }
             i++;
         }
-        g.drawImage(GamePanel.tilesetRes[1], buttonHealth.x, buttonHealth.y, buttonHealth.width, buttonHealth.height, null);
-        g.drawImage(GamePanel.tilesetRes[2], buttonCoins.x, buttonCoins.y, buttonCoins.width, buttonCoins.height, null);
-        g.drawImage(GamePanel.tilesetRes[3], buttonKills.x, buttonKills.y, buttonKills.width, buttonKills.height, null);
+        g.drawImage(GamePanel.resImages[1], buttonHealth.x, buttonHealth.y, buttonHealth.width, buttonHealth.height, null);
+        g.drawImage(GamePanel.resImages[2], buttonCoins.x, buttonCoins.y, buttonCoins.width, buttonCoins.height, null);
+        g.drawImage(GamePanel.resImages[3], buttonKills.x, buttonKills.y, buttonKills.width, buttonKills.height, null);
         g.setFont(new Font("Helvetica", Font.BOLD, 14));
         g.setColor(new Color(255, 255, 255));
         g.drawString("" + GamePanel.gamerHealth, buttonHealth.x + buttonHealth.width + iconSpace, buttonHealth.y + iconTextY);
@@ -130,7 +140,7 @@ public class Store {
         g.drawString("Level: " + GamePanel.level, buttonKills.x, buttonKills.y +iconSize + iconTextY);
 
         if (holdsItem) {
-            g.drawImage(GamePanel.tilesetAir[heldId], GamePanel.mse.x - (buttons[0].width - itemIn*2)/2 + itemIn, GamePanel.mse.y - (buttons[0].width - itemIn*2)/2 + itemIn, buttons[0].width - itemIn*2, buttons[0].height - itemIn*2, null);
+            g.drawImage(GamePanel.airImages[heldId], GamePanel.mouseEvent.x - (buttons[0].width - itemIn*2)/2 + itemIn, GamePanel.mouseEvent.y - (buttons[0].width - itemIn*2)/2 + itemIn, buttons[0].width - itemIn*2, buttons[0].height - itemIn*2, null);
         }
     }
 }
